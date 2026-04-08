@@ -125,5 +125,135 @@
     }
   html {
     @apply font-sans;
+    scroll-behavior: smooth;
     }
+}
+
+/* ─── Custom scrollbar ─────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#a855f7, #06b6d4);
+  border-radius: 3px;
+}
+
+/* ─── Keyframes ────────────────────────────────────────────────── */
+@keyframes aurora-float {
+  0%   { transform: translate(0, 0) scale(1) rotate(0deg); }
+  100% { transform: translate(40px, 30px) scale(1.15) rotate(5deg); }
+}
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-18px); }
+}
+@keyframes pulse-ring {
+  0%   { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(2.8); opacity: 0; }
+}
+@keyframes gradient-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes shimmer-move {
+  from { background-position: -200% 0; }
+  to   { background-position: 200% 0; }
+}
+@keyframes glitch-main {
+  0%, 100%  { clip-path: none; transform: none; }
+  19%       { clip-path: polygon(0 12%, 100% 12%, 100% 28%, 0 28%); transform: translate(-4px, 0); }
+  20%       { clip-path: none; }
+  39%       { clip-path: polygon(0 55%, 100% 55%, 100% 72%, 0 72%); transform: translate(4px, 0); }
+  40%       { clip-path: none; }
+  79%       { clip-path: polygon(0 82%, 100% 82%, 100% 95%, 0 95%); transform: translate(-2px, 0); }
+  80%       { clip-path: none; }
+}
+@keyframes glitch-r {
+  0%, 100%  { clip-path: none; transform: none; opacity: 0; }
+  19%       { clip-path: polygon(0 45%, 100% 45%, 100% 60%, 0 60%); transform: translate(5px, 0); opacity: 0.85; color: #0ff; }
+  20%       { opacity: 0; }
+  39%       { clip-path: polygon(0 8%, 100% 8%, 100% 22%, 0 22%); transform: translate(-5px, 0); opacity: 0.85; color: #0ff; }
+  40%       { opacity: 0; }
+}
+@keyframes glitch-b {
+  0%, 100%  { clip-path: none; transform: none; opacity: 0; }
+  19%       { clip-path: polygon(0 65%, 100% 65%, 100% 78%, 0 78%); transform: translate(-4px, 0); opacity: 0.85; color: #f0f; }
+  20%       { opacity: 0; }
+  59%       { clip-path: polygon(0 30%, 100% 30%, 100% 44%, 0 44%); transform: translate(4px, 0); opacity: 0.85; color: #f0f; }
+  60%       { opacity: 0; }
+}
+@keyframes scan-line {
+  0%   { top: -10%; }
+  100% { top: 110%; }
+}
+@keyframes border-dance {
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 400% 0%; }
+}
+@keyframes morph {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  50%       { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+}
+
+/* ─── Utility classes ──────────────────────────────────────────── */
+.gradient-text {
+  background: linear-gradient(135deg, #c084fc 0%, #60a5fa 30%, #34d399 60%, #fb923c 85%, #f472b6 100%);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift 5s ease infinite;
+}
+
+.glitch-wrap {
+  position: relative;
+  display: inline-block;
+}
+.glitch-wrap .glitch-main {
+  animation: glitch-main 4s infinite;
+}
+.glitch-wrap::before,
+.glitch-wrap::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  font: inherit;
+  white-space: pre;
+}
+.glitch-wrap::before {
+  animation: glitch-r 4s infinite;
+  color: #0ff;
+}
+.glitch-wrap::after {
+  animation: glitch-b 4s infinite 0.08s;
+  color: #f0f;
+}
+
+.shimmer-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer-move 2.5s infinite;
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.noise-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  pointer-events: none;
 }
